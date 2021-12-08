@@ -273,6 +273,7 @@ Process finished with exit code 0
     - 아무런 인자를 받지 않고, T타입의 객체를 리턴합니다
     - `() -> T`  표현
     - 공급자라는 이름에 맞게 **받는 것 없이, 특정 객체 리턴**
+    - 인터페이스 코드
 
     ```java
     package java.util.function;
@@ -343,3 +344,51 @@ Process finished with exit code 0
     
     Process finished with exit code 0
     ```
+
+
+---
+
+## Function<T,R>
+
+- 역할
+    - arg: `T` | return: `R` → `T -> R`
+    - 수학식에서 함수처럼 특정 값을 받아서 다른 값으로 반환하는 것과 같다
+    - T type = R type 일수도, T type ≠ R type 일 수도 있다
+    - 인터페이스 코드
+
+    ```java
+    
+    package java.util.function;
+    
+    import java.util.Objects;
+    
+    @FunctionalInterface
+    public interface Function<T, R> {
+        R apply(T var1);
+    
+        default <V> Function<V, R> compose(Function<? super V, ? extends T> before) {
+            Objects.requireNonNull(before);
+            return (v) -> {
+                return this.apply(before.apply(v));
+            };
+        }
+    
+        default <V> Function<T, V> andThen(Function<? super R, ? extends V> after) {
+            Objects.requireNonNull(after);
+            return (t) -> {
+                return after.apply(this.apply(t));
+            };
+        }
+    
+        static <T> Function<T, T> identity() {
+            return (t) -> {
+                return t;
+            };
+        }
+    }
+    ```
+
+- 사용법
+    - T타입의 인자를 R타입의 객체를 리턴
+    - apply메서드
+- 예제 결과
