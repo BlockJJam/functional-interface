@@ -264,3 +264,82 @@ Process finished with exit code 0
   
   Process finished with exit code 0
   ```
+
+---
+
+## Supplier
+
+- 역할
+    - 아무런 인자를 받지 않고, T타입의 객체를 리턴합니다
+    - `() -> T`  표현
+    - 공급자라는 이름에 맞게 **받는 것 없이, 특정 객체 리턴**
+
+    ```java
+    package java.util.function;
+    
+    @FunctionalInterface
+    public interface Supplier<T> {
+        T get();
+    }
+    ```
+
+- 사용법
+    - Supplier는 get() 메서드를 통해, 인자 없이 T타입 객체를 리턴한다
+    - `Supplier` 예제
+
+    ```java
+    package functional_interface.basic;
+    
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.List;
+    import java.util.Random;
+    import java.util.function.Supplier;
+    
+    public class SupplierTest {
+        public static void main(String[] args) {
+            Supplier<Integer> integerRandomSupplier = () -> {
+                int randNum = new Random().nextInt();
+                return randNum;
+            };
+    
+            int number = integerRandomSupplier.get(); // 1)
+            System.out.println("random number using supplier: "+ Integer.toString(number));
+    
+            Supplier<Members> superMembersSupplier = () -> new Members(0,"super","01022223333",0, Arrays.asList("1","2"));
+            Members superMember = superMembersSupplier.get(); //2)
+            System.out.println("superMember = " + superMember);
+    
+        }
+    
+        private static class Members{
+            private int id;
+            private String name;
+            private String phone;
+            private int level;
+            private List<String> items = new ArrayList<>();
+    
+            public Members(int id, String name, String phone, int level, List<String> items){
+                this.id = id;
+                this.name = name;
+                this.phone = phone;
+                this.level = level;
+                this.items = items;
+            }
+    
+        }
+    }
+    
+    ```
+
+    - `get()`  |  return: `T`
+      → 1) `integerRandomSupplier`라는 `Supplier`인터페이스를 통해 랜덤한 정수를 `get()`메서드를 통해 가져온다
+      → 2) `superMembersSupplier`를 통해 super멤버를 생성하여 `get()`메서드를 통해 할당받는다
+- 예제 결과물
+
+    ```
+    random number using supplier: 1449326594
+    superMember = Members{id=0, name='super', phone='01022223333', level=0, items=[1, 2]}
+    
+    Process finished with exit code 0
+    ```

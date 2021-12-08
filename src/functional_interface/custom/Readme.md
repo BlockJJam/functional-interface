@@ -15,6 +15,9 @@
     ```
 
 - Functional Interface 는 무엇을 의미할까?
+    - **일급 객체**로 사용할 수 없는 자바 언어의 단점을 보완
+        - 일급객체(first-class object)?    
+        다른 객체들에 일반적으로 적용가능한 연산을 모두 지원하는 객체를 의미
     - 여러개의 default 메서드가 있을 순 있다, **다만 하나의 추상메서드**만 가진다면
       → 함수형 인터페이스(functional interface)
     - **자바의 람다 표현식**은 함수형 인터페이스로만 사용이 가능
@@ -25,8 +28,7 @@
       ![Untitled](https://user-images.githubusercontent.com/57485510/144428889-cdcc8e68-cae7-4f7d-97bc-c34224ae879e.png)
 
       → default method( + static method)가 아니면 `@FunctionalInterface`에 의해 검증이 되는 모습
-
-
+    
 ### Functional Interface를 Custom하게 만들고 이용해보자
 
 - Functional Interface를 직접 짜보자
