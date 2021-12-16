@@ -776,6 +776,68 @@ thenComparedMember = Members{id=3, name='jjm4', phone='010-4321', level=3, items
 
 → 가장 중요한 것은 직접 코드를 짜보되, 예제를 보시고 다른 방식으로도 구현해보시는 것을 추천합니다 → 기술 흡수를 위해
 
+---
+
+## Runnable
+
+- 역할
+    - 아무런 객체를 받지 않고, 리턴도 하지 않는ek
+    - `() -> void`
+    - 실행만 할 수 있는 기능을 담고 있다고 생각하자
+    - 인터페이스 코드
+
+    ```java
+    package java.lang;
+    
+    @FunctionalInterface
+    public interface Runnable {
+        void run();
+    }
+    ```
+
+- 사용법
+    - 인자를 받을 필요도 없고, 어떠한 결과없이 독립적으로 행위만을 담은 코드를 표현할 때 사용하면 될 듯 하다
+    - run() 메서드를 통해, 실행 메서드를 동작시킵니다
+    - 예제 코드
+
+    ```java
+    package functional_interface.basic;
+    
+    public class RunnableTest {
+        public static void main(String[] args) {
+            Runnable runnable = ()-> System.out.println("run alone ");
+    
+            System.out.println(" first print");
+            runnable.run();
+            System.out.println(" third print");
+        }
+    }
+    ```
+
+- 예제 결과
+
+    ```java
+    first print
+    run alone 
+     third print
+    ```
+
+- Runnable 자체로 기능이 특별한 것은 없기 때문에, 간단하게 사용만 해본다
+
+---
+
+## Callable
+
+- 역할
+    - 아무런 인자를 받지 않고 `T`타입 객체를 return
+    - `() -> T`
+    - `Supplier`와 똑같다, 메서드 이름만 다르고 `get()` → `call()` 역할은 똑같다
+- `Supplier` VS `Callable`
+    - 왜 2개로 나뉘어져 있을까? 활용용도에 맞게 사용하면 됩니다
+    - `Callable`은 (`Runnable`)과 함께 병렬 처리(parellel)를 위해 등장했고, `ExecutorService.submit` 메서드의 인자로 `Callable`이 이용됩니다
+    - `Supplier`는 해당 타입의 데이터를 "공급"하는 형태, `Callable`은 해당 타입이 "호출가능한" 형태로 사용하면 됩니다
+- Callable은 따로 예제를 구현해보지 않습니다!
+
 ### 참조
 
 ---
