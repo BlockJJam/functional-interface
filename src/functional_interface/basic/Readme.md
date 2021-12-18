@@ -838,10 +838,74 @@ thenComparedMember = Members{id=3, name='jjm4', phone='010-4321', level=3, items
     - `Supplier`는 해당 타입의 데이터를 "공급"하는 형태, `Callable`은 해당 타입이 "호출가능한" 형태로 사용하면 됩니다
 - Callable은 따로 예제를 구현해보지 않습니다!
 
-### 참조
+---
+
+## 2개의 인자를 활용하는 Bi prefix 인터페이스들
+
+- 특정 인자 1개를 받아서 활용하는 `Predicate`, `Consumer`, `Function` 등은 2개 이상의 타입을 받을 수 있는 인터페이스 가 있다
+    - `BiPredicate` : `(T, U) -> boolean`,  → Method: `boolean test(T t, U u)`
+    - `BiConsumer` : `(T, U) -> void`,  → Method: `boolean accept(T t, U u)`
+    - `BiFunction`  : `(T, U) -> R`,  → Method: `boolean apply(T t, U u)`
 
 ---
 
+## 기본형 특화 함수형 인터페이스
+
+- 위에서 지금까지 확인한 함수형 인터페이스는 **제네릭 함수형 인터페이스**
+- 제네릭의 T,U,R 등의 제네릭 타입에는 참조형만 사용 가능
+- 기본형 - 참조형 사이에는 **박싱/언박싱 관계**가 있고, 자바는 **오토박싱으로 자동화 기능이** 있다
+    - 지금 이 이야기를 하는 이유는, 이러한 변환 기능들은 비용이 소모(성능, 버그 발생가능성..)
+    - 오토박싱으로 인한 비용을 피할 수 있도록 나온 것 → 기본형 특화 함수형 인터페이스
+- 그 종류를 알아보자
+
+  ### Predicate( `T -> boolean`)
+    - 기본형 → 기본형 리턴
+        - `IntPredicate`
+        - `LongPredicate`
+        - `DoublePredicate`
+
+  ### Consumer( `T -> void` )
+    - 기본형 → 기본형 리턴
+        - `IntConsumer`
+        - `LongConsumer`
+        - `DoubleConsumer`
+
+  ### Function( `T -> R`)
+    - 기본형 → 기본형 리턴
+        - `IntToDoubleFunction`
+        - `IntToLongFunction`
+        - `LongToDoubleFunction`
+        - `LongToIntFunction`
+        - `DoubleToLongFunction`
+        - `DoubleToIntFunction`
+    - 기본형 → R 리턴
+        - `IntFunction<R>`
+        - `LongFunction<R>`
+        - `DoubleFunction<R>`
+    - T  → 기본형 리턴
+        - `ToIntFunction<T>`
+        - `ToDoubleFunction<T>`
+        - `ToLongFunction<T>`
+
+  ### Supplier(`()-> T`)
+    - 아무것도 받지 않고 → 기본형 리턴
+        - `BooleanSupplier`
+        - `IntSupplier`
+        - `LongSupplier`
+        - `DoubleSupplier`
+
+---
+
+## Conclusion
+
+- 람다에서 활용가능한 함수형 인터페이스를 만들어보고, 기본 제공 함수형 인터페이스를 사용해보기도 했다
+    - 여기서 만들어본 경험은 함수형 인터페이스를 이해하는 걸로 만족하자
+    - 기본 제공 함수형 인터페이스로 대부분의 것을 만족할 수 있기 때문이다, 결국은 어떤 기능을 택해서, 활용할지는 개발자 역량이라고 보면 된다
+
+---
+
+
+## 참조
 - [https://bcp0109.tistory.com/313](https://bcp0109.tistory.com/313) : 뱀귤 블로그
 - [https://beomseok95.tistory.com/281?category=1064782](https://beomseok95.tistory.com/281?category=1064782) : Beom Dev Log(Comparator)
 - [https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html](https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html) : java document
